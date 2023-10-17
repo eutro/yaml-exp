@@ -96,7 +96,7 @@
             - foo: args
             - args
         - !read |
-          (define (foo . args) 
+          (define (foo . args)
             args)
       - - |-
           - define:
