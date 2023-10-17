@@ -144,5 +144,5 @@
             "All the tags (global and local) from base ",
             racketmodname: [yaml], " are also available; see ",
             secref: ["expressions", !kw doc, quote: [lib:
-            ["yaml/scribblings/yaml.scrbl"], "."]]
+            ["yaml/scribblings/yaml.scrbl"]]], "."
             ]
