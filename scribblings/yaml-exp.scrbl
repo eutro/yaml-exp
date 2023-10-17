@@ -25,7 +25,7 @@
     - define:
       - fibbi: [x]
       - if:
-        - <:
+        - <=:
           - x
           - 1
         - x
