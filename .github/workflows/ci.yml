@@ -1,0 +1,25 @@
+on: [push, pull_request]
+name: CI
+jobs:
+  build:
+    name: "Build on Racket '${{ matrix.racket-version }}' (${{ matrix.racket-variant }}, ${{ matrix.running-on }})"
+    runs-on: ${{matrix.running-on}}
+    strategy:
+      matrix:
+        running-on: ["ubuntu-latest", "windows-latest", "macos-latest"]
+        racket-version: ["stable", "current"]
+        racket-variant: ["BC", "CS"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Bogdanp/setup-racket@v1.10
+        with:
+          architecture: x64
+          distribution: full
+          variant: ${{ matrix.racket-variant }}
+          version: ${{ matrix.racket-version }}
+      - name: Installing yaml-exp and its dependencies
+        run: raco pkg install --no-docs --auto --name yaml-exp
+      - name: Compiling yaml-exp and building its docs
+        run: raco setup --check-pkg-deps --unused-pkg-deps yaml-exp
+      - name: Testing yaml-exp
+        run: raco test -x -p yaml-exp

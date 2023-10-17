@@ -1,4 +1,6 @@
+;; -*- Mode: yaml -*-
 #lang yaml-exp scribble/manual/lang
+---
 
 - doc
 
@@ -13,12 +15,9 @@
 
 - defmodulelang:
   - yaml-exp
-  - [list, "The ", racketmodname: [yaml-exp], " ", language replaces the reader
-     for any module language with a YAML reader using the, " ",
-     racketmodname: [yaml]," package."]
-
-- |
-  Here's an example:
+  - [list, "The ", racketmodname: [yaml-exp], "  language replaces the reader
+     for any module language with a YAML reader using the ",
+     racketmodname: [yaml], " package.\n\nHere's an example:"]
 
 - codeblock:
   - |-
@@ -45,8 +44,8 @@
 - section: [YAML to Code Mapping]
 
 - |
-  The reader clearly doesn't spit out beautiful maps for you like you
-  it might for a pure YAML document. In fact, it performs a couple of
+  The reader clearly doesn't spit out beautiful maps for you like it
+  might for a pure YAML document. In fact, it performs a few
   conversions to produce "usable" source code. These are:
 
 - define-syntax-rule:
@@ -145,5 +144,5 @@
             "All the tags (global and local) from base ",
             racketmodname: [yaml], " are also available; see ",
             secref: ["expressions", !kw doc, quote: [lib:
-            ["yaml/scribblings/yaml.scrbl"]]]
+            ["yaml/scribblings/yaml.scrbl"], "."]]
             ]
