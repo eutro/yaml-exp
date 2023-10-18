@@ -3,10 +3,20 @@
 - require:
   - for-syntax:
     - racket/base
+  - only-in:
+    - "reader.rkt"
+    - install-yaml-read-interaction
 - provide:
   - rename-out:
     - quoted-modbeg: [!sym "#%module-begin"]
     - quoted-top-interaction: [!sym "#%top-interaction"]
+  - top-interacted
+
+- install-yaml-read-interaction:
+
+- define:
+  - top-interacted: [doc]
+  - writeln: [doc]
 
 - define-syntax:
   - quoted-modbeg: [stx]
@@ -17,7 +27,7 @@
       - syntax/loc:
         - stx
         - !sym "#%module-begin":
-          - writeln: [quote: [data]]
+          - for-each: [writeln, [quote: [data]]]
           - ...
 
 - define-syntax:
@@ -28,7 +38,7 @@
     - {_: expr}:
       - syntax/loc:
         - stx
-        - writeln: [quote: [expr]]
+        - top-interacted: [quote: [expr]]
 
 - module:
   - reader
@@ -40,8 +50,5 @@
 
   - !kw read-syntax
   - read-yaml-exp-syntax
-
-  - !kw whole-body-readers?
-  - true
 
   - require: ["reader-impl.rkt"]

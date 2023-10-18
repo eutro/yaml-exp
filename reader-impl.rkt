@@ -4,7 +4,14 @@
          racket/port racket/list
          syntax/readerr)
 
-(provide read-yaml-exp read-yaml-exp-syntax)
+(provide read-yaml-exp read-yaml-exp-syntax
+         read-yaml-exp-whole-body read-yaml-exp-syntax-whole-body
+         yaml-read-interaction)
+
+(define (yaml-read-interaction src in)
+  (parameterize ([read-accept-reader #true]
+                 [read-accept-lang #false])
+    (read-yaml-exp-syntax src in)))
 
 (define (yaml-org-tag nm)
   (string-append "tag:yaml.org,2002:" nm))
@@ -17,6 +24,19 @@
 
 (define (read-yaml-exp-syntax src in)
   (read-yaml-impl in #true src))
+
+(define (read-yaml-whole-body f . args)
+  (append*
+   (port->list
+    (lambda (_ignored)
+      (apply f args))
+    (last args))))
+
+(define (read-yaml-exp-whole-body in)
+  (read-yaml-whole-body read-yaml-exp in))
+
+(define (read-yaml-exp-syntax-whole-body src in)
+  (read-yaml-whole-body read-yaml-exp-syntax src in))
 
 (define yaml-position-offset (make-parameter (list 1 0 0)))
 

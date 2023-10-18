@@ -1,6 +1,6 @@
 #lang info
 (define collection "yaml-exp")
-(define version "0.1")
+(define version "0.2")
 (define deps '("base" "yaml" "rackunit-lib"))
 
 (define build-deps '("racket-doc" "scribble-lib"))
